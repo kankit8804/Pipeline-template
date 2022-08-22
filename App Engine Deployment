@@ -1,0 +1,20 @@
+#this is a basic template Automating GCP AppEngine Deployment on Linux OS 
+#first save this file as .gitlab-ci.yml
+#commit this file on your gitlab repo
+
+stages:  
+- deploy 
+before_script:  
+ - go mod vendor       #these syntex depend on requirment 
+- sed -i 's/cnuro-development/project-mars-uat/g' app.yaml
+#  - source .${CI_COMMIT_REF_NAME}.env
+deploy_app:  
+stage: 
+deploy
+# when: manual  allow_failure: false  
+tags:   
+- uat-runner  only:     
+- staging      
+script:   
+
+ - /home/gitlab-runner/google-cloud-sdk/bin/gcloud app deploy    #this is a file address where your Cloud-SDK is installed
